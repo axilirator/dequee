@@ -1,23 +1,11 @@
 #include <iostream>
 #include "dequee.h"
+#include "fraction.h"
 
 using namespace std;
 
-node::node( int _value )
-{
-	value = _value;
-	next  = NULL;
-	prev  = NULL;
-}
-
-node::~node( void )
-{
-	// Обнуляем указатели соседних элементов //
-	if ( next != NULL ) next->prev = NULL;
-	if ( prev != NULL ) prev->next = NULL;
-}
-
-dequee::dequee( void )
+template <class T>
+dequee<T>::dequee( void )
 {
 	// Инициализируем счетчик //
 	count = 0;
@@ -27,10 +15,11 @@ dequee::dequee( void )
 	last  = NULL;
 }
 
-dequee::~dequee( void )
+template <class T>
+dequee<T>::~dequee( void )
 {
-	node *current = first;
-	node *next;
+	node<T> *current = first;
+	node<T> *next;
 	while ( current != NULL )
 	{
 		next = current->next;
@@ -41,7 +30,8 @@ dequee::~dequee( void )
 	cout << "All dequee has been destructed." << endl;
 }
 
-bool dequee::is_empty( void )
+template <class T>
+bool dequee<T>::is_empty( void )
 {
 	return count == 0;
 }
@@ -51,10 +41,11 @@ bool dequee::is_empty( void )
 	В случае успеха возвращает указатель на узел,
 	в противном случае возвращает NULL.
  */
-node *dequee::find( int n )
+template <class T>
+node<T> *dequee<T>::find( int n )
 {
 	int i = 0;
-	node *current = first;
+	node<T> *current = first;
 
 	while ( current != NULL )
 	{
@@ -70,10 +61,11 @@ node *dequee::find( int n )
 /*
 	Метод добавления нового узла перед существующим другим.
  */
-bool dequee::add_before( int n )
+template <class T>
+bool dequee<T>::add_before( int n )
 {
 	// Находим узел, перед которым будет добавлен новый //
-	node *target = find( n );
+	node<T> *target = find( n );
 	if ( target == NULL )
 	{
 		cout << "Node #" << n << " does not exist!" << endl;
@@ -81,10 +73,8 @@ bool dequee::add_before( int n )
 	}
 
 	// Создаем новый узел //
-	int init_value;
-	cout << "Please enter a new value: ";
-	cin >> init_value;
-	node *new_node = new node( init_value );
+	node<T> *new_node = new node<T>;
+	cin >> new_node;
 
 	// Добавляем в дэк //
 	if ( target->prev == NULL )
@@ -110,10 +100,11 @@ bool dequee::add_before( int n )
 /*
 	Метод добавления узла после другого существующего.
  */
-bool dequee::add_after( int n )
+template <class T>
+bool dequee<T>::add_after( int n )
 {
 	// Находим узел, после которого будет добавлен новый //
-	node *target = find( n );
+	node<T> *target = find( n );
 	if ( target == NULL )
 	{
 		cout << "Node #" << n << " does not exist!" << endl;
@@ -121,10 +112,8 @@ bool dequee::add_after( int n )
 	}
 
 	// Создаем новый узел //
-	int init_value;
-	cout << "Please enter a new value: ";
-	cin >> init_value;
-	node *new_node = new node( init_value );
+	node<T> *new_node = new node<T>;
+	cin >> new_node;
 
 	// Добавляем в дэк //
 	if ( target->next == NULL )
@@ -147,10 +136,11 @@ bool dequee::add_after( int n )
 	return true;
 }
 
-bool dequee::remove( int n )
+template <class T>
+bool dequee<T>::remove( int n )
 {
 	// Находим удаляемый узел //
-	node *target = find( n );
+	node<T> *target = find( n );
 	if ( target == NULL )
 	{
 		cout << "Node #" << n << " does not exist!" << endl;
@@ -184,15 +174,14 @@ bool dequee::remove( int n )
 	return true;
 }
 
-bool dequee::add_first( void )
+template <class T>
+bool dequee<T>::add_first( void )
 {
 	if ( is_empty() )
 	{
 		// Создаем новый узел //
-		int init_value;
-		cout << "Please enter a new value: ";
-		cin >> init_value;
-		node *new_node = new node( init_value );
+		node<T> *new_node = new node<T>;
+		cin >> new_node;
 
 		cout << "A new node added." << endl;
 		first = new_node;
@@ -205,15 +194,14 @@ bool dequee::add_first( void )
 	}
 }
 
-bool dequee::add_last( void )
+template <class T>
+bool dequee<T>::add_last( void )
 {
 	if ( is_empty() )
 	{
 		// Создаем новый узел //
-		int init_value;
-		cout << "Please enter a new value: ";
-		cin >> init_value;
-		node *new_node = new node( init_value );
+		node<T> *new_node = new node<T>;
+		cin >> new_node;
 
 		cout << "A new node added." << endl;
 		first = new_node;
@@ -226,10 +214,11 @@ bool dequee::add_last( void )
 	}
 }
 
-bool dequee::read( int n )
+template <class T>
+bool dequee<T>::read( int n )
 {
 	// Находим требуемый узел //
-	node *target = find( n );
+	node<T> *target = find( n );
 	if ( target == NULL )
 	{
 		cout << "Node #" << n << " does not exist!" << endl;
@@ -242,7 +231,8 @@ bool dequee::read( int n )
 	return true;
 }
 
-bool dequee::read_all( void )
+template <class T>
+bool dequee<T>::read_all( void )
 {
 	if ( is_empty() )
 	{
@@ -250,7 +240,7 @@ bool dequee::read_all( void )
 		return false;
 	}
 
-	node *current = first;
+	node<T> *current = first;
 	cout << "[ ";
 	while ( current != NULL )
 	{
@@ -263,12 +253,18 @@ bool dequee::read_all( void )
 	return true;
 }
 
-bool dequee::remove_first( void )
+template <class T>
+bool dequee<T>::remove_first( void )
 {
 	return remove( 0 );
 }
 
-bool dequee::remove_last( void )
+template <class T>
+bool dequee<T>::remove_last( void )
 {
 	return remove( count - 1 );
 }
+
+template class dequee<int>;
+template class dequee<float>;
+template class dequee<Fraction>;

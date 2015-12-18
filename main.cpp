@@ -1,18 +1,23 @@
 #include <iostream>
 #include "dequee.h"
+#include "fraction.h"
+
+using namespace std;
 
 int main( void )
 {
-	dequee a;
-	a.add_first();
-	a.add_first();
-	a.add_first();
-	a.add_first();
-	a.add_last();
-	a.remove_first();
-	a.remove_last();
+	dequee<Fraction> first;
+	first.add_first();
+	first.add_first();
+	first.read_all();
 
-	a.read_all();
+	cout << endl;
+
+	dequee<int> second;
+	second.add_first();
+	second.add_first();
+	second.add_last();
+	second.read_all();
 
 	return 0;
 }

@@ -1,30 +1,21 @@
-class node
-{
-public:
-	// Данные элемента очереди //
-	int value;
+#include "node.h"
 
-	// Указатели на предыдущий и следующий элементы //
-	node *next;
-	node *prev;
-
-	node( int _value );
-	~node( void );
-};
-
-class dequee
+template <class T> class dequee
 {
 private:
 	// Количество элементов в деке //
 	unsigned short count;
 
 	// Указатели на первый и последний элементы //
-	node *first;
-	node *last;
+	node<T> *first;
+	node<T> *last;
 public:
 	dequee( void );
 	~dequee( void );
 
+	/*
+		Возвращает true, если дек пуст.
+	 */
 	bool is_empty( void );
 
 	/*
@@ -32,7 +23,7 @@ public:
 		В случае успеха возвращает указатель на узел,
 		в противном случае возвращает NULL.
 	 */
-	node *find( int n );
+	node<T> *find( int n );
 
 	/*
 		Метод добавления нового узла перед существующим другим.
